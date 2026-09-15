@@ -2,20 +2,19 @@
 
 Shared, theme-neutral utilities for Rdlabo Ionic themes.
 
-This package intentionally starts without shared implementations. Utilities are
-added only after a stable abstraction has been identified across the iOS and
-Material Design themes.
-
 TypeScript and Sass sources are exported directly. Consumers are expected to
 compile them as part of an Angular/Ionic application build.
 
 ```typescript
-import {} from '@rdlabo/ionic-theme-utils';
+import { createIosTransitionAnimation, getPopoverPosition } from '@rdlabo/ionic-theme-utils';
 ```
 
 ```scss
-@use '@rdlabo/ionic-theme-utils/styles';
+@use 'pkg:@rdlabo/ionic-theme-utils/styles/structured-list';
 ```
+
+The package currently contains shared iOS transition construction, popover
+positioning, searchable tab-bar utilities, and structured-list Sass mixins.
 
 ## Development
 
