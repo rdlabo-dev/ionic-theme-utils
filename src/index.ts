@@ -30,6 +30,8 @@ export {
 } from './popover/utils';
 
 export { createCalloutSurface } from './popover/callout-surface';
+export { iosEnterAnimation as iosPopoverEnterAnimation } from './popover/animations/ios.enter';
+export { iosLeaveAnimation as iosPopoverLeaveAnimation } from './popover/animations/ios.leave';
 
 export {
   TabBarSearchableType,
