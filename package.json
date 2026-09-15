@@ -13,7 +13,7 @@
       "import": "./src/index.ts"
     },
     "./styles": "./src/styles/index.scss",
-    "./styles/*": "./src/styles/*"
+    "./styles/*": "./src/styles/*.scss"
   },
   "files": [
     "src",
