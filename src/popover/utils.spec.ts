@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { calculateWindowAdjustment, getIndexOfItem, getNextItem, getPrevItem } from './utils';
+import { calculateWindowAdjustment, getIndexOfItem, getNextItem, getPopoverPosition, getPrevItem } from './utils';
 
 describe('popover utilities', () => {
   it('navigates only relative to ion-item elements', () => {
@@ -30,5 +30,29 @@ describe('popover utilities', () => {
       checkSafeAreaLeft: false,
       checkSafeAreaRight: true,
     });
+  });
+
+  it.each([
+    { isRTL: false, side: 'start' as const, left: 60, originX: 'right' },
+    { isRTL: false, side: 'end' as const, left: 140, originX: 'left' },
+    { isRTL: true, side: 'start' as const, left: 140, originX: 'left' },
+    { isRTL: true, side: 'end' as const, left: 60, originX: 'right' },
+  ])('maps the logical $side side in RTL=$isRTL', ({ isRTL, side, left, originX }) => {
+    const trigger = document.createElement('button');
+    trigger.getBoundingClientRect = () => ({
+      top: 20,
+      left: 100,
+      width: 40,
+      height: 30,
+      right: 140,
+      bottom: 50,
+      x: 100,
+      y: 20,
+      toJSON: () => ({}),
+    });
+
+    expect(
+      getPopoverPosition(isRTL, 40, 20, 'trigger', side, 'start', { top: 0, left: 0, originX: 'left', originY: 'top' }, trigger),
+    ).toMatchObject({ left, originX });
   });
 });
