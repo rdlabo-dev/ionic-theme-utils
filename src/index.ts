@@ -32,6 +32,10 @@ export {
 export { createCalloutSurface } from './popover/callout-surface';
 export { iosEnterAnimation as iosPopoverEnterAnimation } from './popover/animations/ios.enter';
 export { iosLeaveAnimation as iosPopoverLeaveAnimation } from './popover/animations/ios.leave';
+export { cloneElement, getStep, changeSelectedElement, Config, config } from './theme';
+export { getElementRoot, raf } from './dom';
+export { createFocusController, type FocusController } from './focus-controller';
+export type { EffectScales, registeredEffect, AnimationPosition } from './sheets-of-glass';
 
 export {
   TabBarSearchableType,

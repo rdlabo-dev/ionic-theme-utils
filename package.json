@@ -13,6 +13,7 @@
       "import": "./dist/index.js"
     },
     "./styles": "./src/styles/index.scss",
+    "./styles/md-ion-list-inset": "./src/styles/md-ion-list-inset.scss",
     "./styles/*": "./src/styles/*.scss"
   },
   "files": [

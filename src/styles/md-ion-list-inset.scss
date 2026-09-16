@@ -1,0 +1,20 @@
+@use 'structured-list';
+
+@mixin theme($variant: classic, $disabled-selector: null) {
+  ion-list.md {
+    @include structured-list.support-text($disabled-selector: $disabled-selector);
+
+    &.list-inset {
+      @include structured-list.layout(8px, 16px, $variant: $variant, $disabled-selector: $disabled-selector);
+      :is(#{structured-list.$groups}) ion-item > ion-input[labelplacement='floating'] {
+        transition: transform 200ms ease;
+        &:not(.label-floating) {
+          transform: translateY(-7px);
+        }
+        &.label-floating {
+          transform: translateY(-4px);
+        }
+      }
+    }
+  }
+}
