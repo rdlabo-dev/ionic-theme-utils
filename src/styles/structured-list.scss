@@ -81,14 +81,16 @@ $groups: ion-item-group, ion-reorder-group, ion-accordion-group, ion-radio-group
         font-size: 0.76rem;
         line-height: 1.06rem;
         font-weight: 400;
-        margin: 8px 16px 4px 0;
+        margin-block: 8px 4px;
+        margin-inline: 0 16px;
 
         &:not(.ion-color) {
           --color: var(--ion-color-medium-tint);
         }
       } @else {
         font-size: 0.9rem;
-        margin: 8px 16px 4px 0;
+        margin-block: 8px 4px;
+        margin-inline: 0 16px;
       }
     }
   }
@@ -157,6 +159,10 @@ $groups: ion-item-group, ion-reorder-group, ion-accordion-group, ion-radio-group
         text-align: center;
         padding: 32px 16px 16px;
         transform: translateX(5px);
+
+        &:dir(rtl) {
+          transform: translateX(-5px);
+        }
 
         /**
          * ion-header.header-collapse-condenseを使って、スクロールによってHeaderを変化させるトリック
@@ -255,7 +261,7 @@ $groups: ion-item-group, ion-reorder-group, ion-accordion-group, ion-radio-group
       }
 
       ion-text[slot='end']#{$d} {
-        padding-left: 8px;
+        padding-inline-start: 8px;
       }
 
       &.item-disabled {
@@ -280,13 +286,18 @@ $groups: ion-item-group, ion-reorder-group, ion-accordion-group, ion-radio-group
   }
 
   & > ion-note#{$d} {
+    margin-block: 8px;
+    margin-inline: calc(var(--ion-safe-area-left, 0) + $outer-note-inset) calc(var(--ion-safe-area-right, 0) + $outer-note-inset);
+
+    &:dir(rtl) {
+      margin-inline: calc(var(--ion-safe-area-right, 0) + $outer-note-inset) calc(var(--ion-safe-area-left, 0) + $outer-note-inset);
+    }
+
     @if $is-ios27 {
       font-size: 0.76rem;
       line-height: 1.06rem;
       font-weight: 400;
       display: block;
-      margin: 8px calc(var(--ion-safe-area-right, 0) + $outer-note-inset) 8px calc(var(--ion-safe-area-left, 0) + $outer-note-inset);
-
       &:not(.ion-color) {
         --color: var(--ion-color-medium-tint);
       }
@@ -294,7 +305,6 @@ $groups: ion-item-group, ion-reorder-group, ion-accordion-group, ion-radio-group
       --color: var(--ion-color-medium-tint);
       font-size: 0.9rem;
       display: block;
-      margin: 8px calc(var(--ion-safe-area-right, 0) + $outer-note-inset) 8px calc(var(--ion-safe-area-left, 0) + $outer-note-inset);
     }
   }
 }
