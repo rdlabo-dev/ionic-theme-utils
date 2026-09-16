@@ -18,6 +18,8 @@ export interface IosTransitionAnimationConfig {
    * ios26 uses 30; ios27 uses 33.
    */
   offLeftPercent: number;
+  /** Radius applied to the foreground page while transitioning. */
+  radius?: number;
   /** Resolves the ion-page (or fallback) element for a leaving view. */
   getIonPageElement: (element: HTMLElement) => Element;
   /**
@@ -187,8 +189,7 @@ export const createIosTransitionAnimation = <TOpts extends IosTransitionAnimatio
         shade.className = 'ios-transition-shade';
         shade.setAttribute('aria-hidden', 'true');
         const clipPath = topPage.style.clipPath;
-        // UIKit's continuous page outline is smaller in tablet-sized panes.
-        const [corner, control] = topPage.offsetWidth >= 768 ? [36, 13] : [78, 22];
+        const corner = config.radius ?? 0;
         Object.assign(shade.style, {
           position: 'absolute',
           inset: '0',
@@ -198,12 +199,9 @@ export const createIosTransitionAnimation = <TOpts extends IosTransitionAnimatio
         });
         rootAnimation.beforeAddWrite(() => {
           topPage.before(shade);
-          topPage.style.clipPath = `inset(0 round ${corner * 0.82}px)`;
-          topPage.style.clipPath = `shape(from 0px ${corner}px,
-          curve to ${corner}px 0px with 0px ${control}px / ${control}px 0px, hline to calc(100% - ${corner}px),
-          curve to 100% ${corner}px with calc(100% - ${control}px) 0px / 100% ${control}px, vline to calc(100% - ${corner}px),
-          curve to calc(100% - ${corner}px) 100% with 100% calc(100% - ${control}px) / calc(100% - ${control}px) 100%, hline to ${corner}px,
-          curve to 0px calc(100% - ${corner}px) with ${control}px 100% / 0px calc(100% - ${control}px), close)`;
+          if (corner > 0) {
+            topPage.style.clipPath = `inset(0 round ${corner}px)`;
+          }
         });
         rootAnimation.afterAddWrite(() => {
           shade.remove();
