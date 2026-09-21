@@ -62,9 +62,6 @@ const animateFixedBackButton = (
     element,
     visibility: element.style.visibility,
   }));
-  const rect = button.getBoundingClientRect();
-  const width = button.offsetWidth;
-  const height = button.offsetHeight;
   const clone = getClonedElement<HTMLIonBackButtonElement>('ion-back-button');
   if (!clone) {
     return;
@@ -114,6 +111,15 @@ const animateFixedBackButton = (
         ]),
     );
   }
+  let rect: DOMRect;
+  let width: number;
+  let height: number;
+  root.beforeAddRead(() => {
+    rect = button.getBoundingClientRect();
+    width = button.offsetWidth;
+    height = button.offsetHeight;
+  });
+
   root.beforeAddWrite(() => {
     Object.assign(clone.style, {
       position: 'fixed',
