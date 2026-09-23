@@ -22,6 +22,8 @@ export interface IosTransitionAnimationConfig {
   radius?: number;
   /** Resolves the ion-page (or fallback) element for a leaving view. */
   getIonPageElement: (element: HTMLElement) => Element;
+  /** Whether the fixed back button participates in the page transition. */
+  shouldAnimateFixedBackButton?: (navEl: HTMLElement) => boolean;
   /**
    * Optional hook invoked after the root animation is fully composed
    * (e.g. ios27 `connectNativeUIShellTransition`).
@@ -277,7 +279,7 @@ export const createIosTransitionAnimation = <TOpts extends IosTransitionAnimatio
         }
       }
 
-      if (topPage) {
+      if (topPage && config.shouldAnimateFixedBackButton?.(navEl) !== false) {
         animateFixedBackButton(
           rootAnimation,
           navEl,

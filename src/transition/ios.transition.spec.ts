@@ -52,6 +52,35 @@ describe('createIosTransitionAnimation radius', () => {
 });
 
 describe('createIosTransitionAnimation fixed back button', () => {
+  it('omits only its clone when the host opts out', () => {
+    const nav = document.createElement('ion-router-outlet');
+    const enteringEl = createPage(true);
+    const button = document.createElement('ion-back-button');
+    enteringEl.querySelector('ion-header')!.append(button);
+    nav.append(enteringEl);
+    document.body.append(nav);
+
+    Object.defineProperty(button, 'offsetWidth', { configurable: true, value: 40 });
+    const clone = document.createElement('ion-back-button');
+    clone.classList.add('ion-cloned-element');
+    document.body.append(clone);
+
+    const animation = createIosTransitionAnimation({
+      offLeftPercent: 30,
+      getIonPageElement: (element) => element,
+      shouldAnimateFixedBackButton: () => false,
+    })(nav, { enteringEl });
+    animation.progressStart(true);
+
+    expect(clone.parentElement).toBe(document.body);
+    expect(button.style.visibility).toBe('');
+    expect(animation.childAnimations.some((child) => child.elements.includes(enteringEl))).toBe(true);
+
+    animation.destroy();
+    nav.remove();
+    clone.remove();
+  });
+
   it('measures its coordinates when the transition starts', () => {
     const documentDirection = document.dir;
     document.dir = 'rtl';
