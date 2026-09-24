@@ -169,9 +169,10 @@ jobs:
               }
             };
 
-            const getPackage = async (ref, repository = { owner, repo }) => {
+            const getTrustedPackage = async (ref) => {
               const { data } = await github.rest.repos.getContent({
-                ...repository,
+                owner,
+                repo,
                 path: 'package.json',
                 ref,
               });
@@ -220,7 +221,6 @@ jobs:
             let event;
             let sourceKind;
             let targetBranch;
-            let candidateRepository = { owner, repo };
 
             if (isComment) {
               const requester = context.payload.comment.user.login;
@@ -278,10 +278,6 @@ jobs:
                 return;
               }
               headSha = pullRequest.head.sha;
-              candidateRepository = {
-                owner: pullRequest.head.repo.owner.login,
-                repo: pullRequest.head.repo.name,
-              };
               distTag = 'beta';
               event = 'pull_request';
               sourceKind = 'comment';
@@ -381,13 +377,8 @@ jobs:
               return;
             }
 
-            const trustedPackage = await getPackage(targetBranch);
-            const candidatePackage = await getPackage(headSha, candidateRepository);
-            if (candidatePackage.name !== trustedPackage.name) {
-              core.setFailed('The candidate changed the trusted package name.');
-              return;
-            }
-            const version = `${candidatePackage.baseVersion}-beta.pr${prNumber}.sha${headSha.slice(0, 12)}`;
+            const trustedPackage = await getTrustedPackage(targetBranch);
+            const version = `${trustedPackage.baseVersion}-beta.pr${prNumber}.sha${headSha.slice(0, 12)}`;
 
             core.setOutput('allowed', 'true');
             core.setOutput('artifact', artifactName);
@@ -454,7 +445,6 @@ jobs:
               return;
             }
 
-            let candidateRepository = { owner, repo };
             if (process.env.SOURCE_KIND === 'comment') {
               const pull_number = Number(process.env.PR_NUMBER);
               const { data: pullRequest } = await github.rest.pulls.get({ owner, repo, pull_number });
@@ -476,14 +466,6 @@ jobs:
                 core.setFailed(`@${requester} is no longer a repository owner or maintainer.`);
                 return;
               }
-              if (!pullRequest.head.repo) {
-                core.setFailed('The pull request head repository is no longer available.');
-                return;
-              }
-              candidateRepository = {
-                owner: pullRequest.head.repo.owner.login,
-                repo: pullRequest.head.repo.name,
-              };
             } else if (process.env.SOURCE_KIND === 'merge') {
               const { data: branch } = await github.rest.repos.getBranch({
                 owner,
@@ -513,24 +495,21 @@ jobs:
               return;
             }
 
-            const getPackage = async (ref, repository) => {
-              const { data } = await github.rest.repos.getContent({
-                ...repository,
-                path: 'package.json',
-                ref,
-              });
-              if (Array.isArray(data) || data.type !== 'file' || !data.content) {
-                throw new Error(`package.json is not a file at ${ref}`);
-              }
-              return JSON.parse(Buffer.from(data.content, 'base64').toString('utf8'));
-            };
-            const trustedPackage = await getPackage(targetBranch, { owner, repo });
-            const candidatePackage = await getPackage(process.env.HEAD_SHA, candidateRepository);
-            const baseVersion = candidatePackage.version.split('-')[0];
+            const { data } = await github.rest.repos.getContent({
+              owner,
+              repo,
+              path: 'package.json',
+              ref: targetBranch,
+            });
+            if (Array.isArray(data) || data.type !== 'file' || !data.content) {
+              core.setFailed('Trusted package.json could not be read.');
+              return;
+            }
+            const packageJson = JSON.parse(Buffer.from(data.content, 'base64').toString('utf8'));
+            const baseVersion = packageJson.version.split('-')[0];
             const expectedVersion = `${baseVersion}-beta.pr${process.env.PR_NUMBER}.sha${process.env.HEAD_SHA.slice(0, 12)}`;
             if (
-              trustedPackage.name !== process.env.PACKAGE_NAME ||
-              candidatePackage.name !== trustedPackage.name ||
+              packageJson.name !== process.env.PACKAGE_NAME ||
               expectedVersion !== process.env.VERSION
             ) {
               core.setFailed('Trusted package identity changed after authorization; rerun the release request.');

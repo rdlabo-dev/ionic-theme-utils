@@ -31,3 +31,6 @@ npm run lint
 Use `npm link` while developing this package together with a theme repository.
 Theme repositories should depend on a published npm version. Stable releases use
 the `latest` dist-tag, prereleases use `next`, and PR candidates use `beta`.
+
+Run `npm run release` on `main` to select the next SemVer version and push its
+`utils-v*` tag. GitHub Actions publishes the matching package version.
