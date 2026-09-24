@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { createIosTransitionAnimation } from './ios.transition';
+import { createIosTransitionAnimation } from './ios.transition.js';
 
 const createPage = (translucent = false) => {
   const page = document.createElement('div');

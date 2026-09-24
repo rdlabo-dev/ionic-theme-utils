@@ -1,8 +1,8 @@
 import { createAnimation } from '@ionic/core';
 import type { Animation } from '@ionic/core';
-import { calculateWindowAdjustment, getPopoverDimensions, getPopoverPosition, POPOVER_IOS_BODY_MARGIN } from '../utils';
-import { createCalloutSurface } from '../callout-surface';
-import { getElementRoot } from '../../dom';
+import { calculateWindowAdjustment, getPopoverDimensions, getPopoverPosition, POPOVER_IOS_BODY_MARGIN } from '../utils.js';
+import { createCalloutSurface } from '../callout-surface.js';
+import { getElementRoot } from '../../dom.js';
 
 const POPOVER_IOS_BODY_PADDING = 5;
 

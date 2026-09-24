@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getElementRoot } from './dom';
+import { getElementRoot } from './dom.js';
 
 describe('getElementRoot', () => {
   it('returns the shadow root when one exists', () => {
