@@ -3,7 +3,7 @@ export {
   shadow,
   type IosTransitionAnimationConfig,
   type IosTransitionAnimationOptions,
-} from './transition/ios.transition';
+} from './transition/ios.transition.js';
 
 export type {
   PopoverInterface,
@@ -13,7 +13,7 @@ export type {
   PositionReference,
   PositionSide,
   PositionAlign,
-} from './popover/popover-interface';
+} from './popover/popover-interface.js';
 
 export {
   POPOVER_IOS_BODY_MARGIN,
@@ -27,15 +27,15 @@ export {
   calculateWindowAdjustment,
   type ReferenceCoordinates,
   type PopoverStyles,
-} from './popover/utils';
+} from './popover/utils.js';
 
-export { createCalloutSurface } from './popover/callout-surface';
-export { iosEnterAnimation as iosPopoverEnterAnimation } from './popover/animations/ios.enter';
-export { iosLeaveAnimation as iosPopoverLeaveAnimation } from './popover/animations/ios.leave';
-export { cloneElement, getStep, changeSelectedElement, Config, config } from './theme';
-export { getElementRoot, raf } from './dom';
-export { createFocusController, type FocusController } from './focus-controller';
-export type { EffectScales, registeredEffect, AnimationPosition } from './sheets-of-glass';
+export { createCalloutSurface } from './popover/callout-surface.js';
+export { iosEnterAnimation as iosPopoverEnterAnimation } from './popover/animations/ios.enter.js';
+export { iosLeaveAnimation as iosPopoverLeaveAnimation } from './popover/animations/ios.leave.js';
+export { cloneElement, getStep, changeSelectedElement, Config, config } from './theme.js';
+export { getElementRoot, raf } from './dom.js';
+export { createFocusController, type FocusController } from './focus-controller.js';
+export type { EffectScales, registeredEffect, AnimationPosition } from './sheets-of-glass.js';
 
 export {
   TabBarSearchableType,
@@ -43,7 +43,7 @@ export {
   type SearchableEventCache,
   type ElementSizes,
   type ElementReferences,
-} from './tab-bar-searchable/interfaces';
+} from './tab-bar-searchable/interfaces.js';
 
 export {
   ANIMATION_DURATION,
@@ -56,4 +56,4 @@ export {
   getElement,
   getElementReferences,
   getElementSizes,
-} from './tab-bar-searchable/utils';
+} from './tab-bar-searchable/utils.js';

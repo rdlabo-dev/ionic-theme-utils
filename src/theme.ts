@@ -1,5 +1,5 @@
 import type { IonicConfig } from '@ionic/core';
-import type { AnimationPosition } from './sheets-of-glass';
+import type { AnimationPosition } from './sheets-of-glass.js';
 
 export const cloneElement = (tagName: string, useCache: boolean = true): HTMLElement => {
   if (useCache) {

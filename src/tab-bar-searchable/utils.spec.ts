@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { getElement, getElementReferences, getElementSizes } from './utils';
+import { getElement, getElementReferences, getElementSizes } from './utils.js';
 
 const rect = (width: number, height: number, top = 0, left = 0) => ({ width, height, top, left }) as DOMRect;
 

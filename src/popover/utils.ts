@@ -1,6 +1,6 @@
-import { getElementRoot, raf } from '../dom';
+import { getElementRoot, raf } from '../dom.js';
 
-import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from './popover-interface';
+import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from './popover-interface.js';
 
 /** Shared with theme popover enter animations (iOS body margin). */
 export const POPOVER_IOS_BODY_MARGIN = 8;

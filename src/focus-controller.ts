@@ -1,4 +1,4 @@
-import { config } from './theme';
+import { config } from './theme.js';
 
 const LAST_FOCUS = 'ion-last-focus';
 const moveFocus = (element: HTMLElement) => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { calculateWindowAdjustment, getIndexOfItem, getNextItem, getPopoverPosition, getPrevItem } from './utils';
+import { calculateWindowAdjustment, getIndexOfItem, getNextItem, getPopoverPosition, getPrevItem } from './utils.js';
 
 describe('popover utilities', () => {
   it('navigates only relative to ion-item elements', () => {

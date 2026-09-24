@@ -1,4 +1,4 @@
-import { ElementReferences, ElementSizes } from './interfaces';
+import { ElementReferences, ElementSizes } from './interfaces.js';
 
 export const ANIMATION_DURATION = 400;
 export const ANIMATION_DELAY_BASE = 140;
