@@ -612,11 +612,12 @@ export const calculateWindowAdjustment = (
   triggerCoordinates?: ReferenceCoordinates,
   eventElementRect?: DOMRect,
   isReplace: boolean = false,
+  verticalOffset: number = POPOVER_IOS_BODY_MARGIN,
 ): PopoverStyles => {
   const triggerTop = triggerCoordinates ? triggerCoordinates.top + triggerCoordinates.height : bodyHeight / 2 - contentHeight / 2;
   const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
   let left = coordLeft;
-  let top = !isReplace ? coordTop + POPOVER_IOS_BODY_MARGIN : coordTop - triggerHeight;
+  let top = !isReplace ? coordTop + verticalOffset : coordTop - triggerHeight;
   let bottom;
   let originX = contentOriginX;
   let originY = contentOriginY;

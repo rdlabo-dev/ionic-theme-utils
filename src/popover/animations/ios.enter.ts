@@ -8,6 +8,8 @@ const POPOVER_IOS_BODY_PADDING = 5;
 
 /**
  * iOS Popover Enter Animation
+ * `opts.verticalOffset` overrides the non-replacing surface offset in CSS pixels.
+ * Omit it to use the theme's default body margin.
  */
 // TODO(FW-2832): types
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: any = {}): Animation => {
@@ -102,6 +104,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: any = {}): Animatio
     results.referenceCoordinates,
     referenceSizeEl?.getBoundingClientRect(),
     isReplace,
+    opts.verticalOffset,
   );
   // A replacing surface grows inward from the button's edge, not its center.
   const preferredLeft =
