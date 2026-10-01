@@ -616,7 +616,8 @@ export const calculateWindowAdjustment = (
   const triggerTop = triggerCoordinates ? triggerCoordinates.top + triggerCoordinates.height : bodyHeight / 2 - contentHeight / 2;
   const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
   let left = coordLeft;
-  let top = !isReplace ? coordTop + POPOVER_IOS_BODY_MARGIN : coordTop - triggerHeight;
+  const horizontal = side === 'left' || side === 'right' || side === 'start' || side === 'end';
+  let top = !isReplace ? coordTop + (horizontal ? 0 : POPOVER_IOS_BODY_MARGIN) : coordTop - triggerHeight;
   let bottom;
   let originX = contentOriginX;
   let originY = contentOriginY;
