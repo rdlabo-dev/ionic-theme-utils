@@ -618,6 +618,7 @@ export const calculateWindowAdjustment = (
   let left = coordLeft;
   const horizontal = side === 'left' || side === 'right' || side === 'start' || side === 'end';
   let top = !isReplace ? coordTop + (horizontal ? 0 : POPOVER_IOS_BODY_MARGIN) : coordTop - triggerHeight;
+  if (horizontal && !isReplace) top = Math.max(bodyPadding, Math.min(top, bodyHeight - bodyPadding - contentHeight));
   let bottom;
   let originX = contentOriginX;
   let originY = contentOriginY;
