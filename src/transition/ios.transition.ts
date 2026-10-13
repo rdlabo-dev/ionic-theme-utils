@@ -140,7 +140,14 @@ const animateFixedBackButton = (
   });
   root.afterAddWrite(() => {
     buttons.forEach(({ element, visibility }) => (element.style.visibility = visibility));
-    cloneParent.insertBefore(clone, cloneNextSibling);
+    // The sibling captured at build time may have left the DOM during the
+    // transition; insertBefore would then throw NotFoundError and the
+    // transition would never settle.
+    if (cloneNextSibling && cloneNextSibling.parentNode === cloneParent) {
+      cloneParent.insertBefore(clone, cloneNextSibling);
+    } else {
+      cloneParent.appendChild(clone);
+    }
     if (cloneStyle === null) {
       clone.removeAttribute('style');
     } else {
