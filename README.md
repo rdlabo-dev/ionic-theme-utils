@@ -9,6 +9,10 @@ built before publication; Sass sources are included for theme builds.
 npm install @rdlabo/ionic-theme-utils
 ```
 
+`@ionic/core` is an optional peer so build tools and non-Ionic consumers do not
+install Ionic transitively. To use the JavaScript animation helpers, your app
+must provide `@ionic/core` (`>=8.8.1 <10`); existing Ionic apps already do.
+
 ```typescript
 import { createIosTransitionAnimation, getPopoverPosition } from '@rdlabo/ionic-theme-utils';
 ```
