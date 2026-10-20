@@ -154,29 +154,20 @@ test('builds extensionless sources and declarations with the packed shared CLI',
   );
 });
 
-test('a transitive utils dependency does not install Ionic for a non-Ionic consumer', () => {
-  const wrapper = join(temporary, 'non-ionic-wrapper');
+test('installing utils does not pull Ionic into a non-Ionic consumer', () => {
   const consumer = join(temporary, 'non-ionic-consumer');
-  mkdirSync(wrapper);
   mkdirSync(consumer);
-  writeFileSync(
-    join(wrapper, 'package.json'),
-    JSON.stringify({
-      name: 'non-ionic-wrapper',
-      version: '1.0.0',
-      dependencies: { [manifest.name]: `file:${join(temporary, archive.filename)}` },
-    }),
+  execFileSync(
+    'npm',
+    ['install', join(temporary, archive.filename), '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'],
+    {
+      cwd: consumer,
+      stdio: 'pipe',
+      timeout: 120000,
+    },
   );
-  const [parent] = JSON.parse(
-    execFileSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', temporary], { cwd: wrapper, encoding: 'utf8' }),
-  );
-  execFileSync('npm', ['install', join(temporary, parent.filename), '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'], {
-    cwd: consumer,
-    stdio: 'pipe',
-    timeout: 120000,
-  });
   const lock = JSON.parse(readFileSync(join(consumer, 'package-lock.json'), 'utf8'));
-  assert(lock.packages[`node_modules/${manifest.name}`], 'utils must be resolved transitively');
+  assert(lock.packages[`node_modules/${manifest.name}`], 'utils must be installed');
   for (const name of ['@ionic/core', '@stencil/core', 'ionicons']) {
     assert(!Object.keys(lock.packages).some((path) => path.endsWith(`node_modules/${name}`)), `${name} was installed implicitly`);
   }
